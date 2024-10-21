@@ -38,31 +38,32 @@ export default {
   },
 
   methods: {
-    async fetchQuestion() {
-      const maxRetries = 5;
-      let attempts = 0;
+  async fetchQuestion() {
+    let results = []; // Inicializa results fora do loop
 
-      while (attempts < maxRetries) {
-        try {
-          const response = await this.axios.get('https://opentdb.com/api.php?amount=1&category=18');
-          this.question = response.data.results[0].question;
-          this.incorrectAnswers = response.data.results[0].incorrect_answers;
-          this.correctAnswer = response.data.results[0].correct_answer;
+    while (results.length === 0) {
+      try {
+        const response = await this.axios.get('https://opentdb.com/api.php?amount=1&category=18');
+        results = response.data.results; // Atribui diretamente a results
 
-          if (this.question && this.incorrectAnswers && this.correctAnswer) {
-            break;
-          }
-        } catch (error) {
-          console.error('Erro ao buscar a pergunta:', error);
+        // Verifica se os resultados não estão vazios
+        if (Array.isArray(results) && results.length > 0) {
+          this.question = results[0].question;
+          this.incorrectAnswers = results[0].incorrect_answers;
+          this.correctAnswer = results[0].correct_answer;
+          console.log('Pergunta obtida com sucesso'); // Log após obter a pergunta
+          break; // Sai do loop se a pergunta foi obtida
         }
-        attempts++;
-      }
-
-      if (attempts === maxRetries) {
-        console.error('Número máximo de tentativas atingido.');
+      } catch (error) {
+        console.error('Erro ao buscar a pergunta:', error);
       }
     }
-  },
+    
+    if (results.length === 0) {
+      console.error('Nenhuma pergunta válida encontrada após várias tentativas.');
+    }
+  }
+},
 
   created() {
     this.fetchQuestion();

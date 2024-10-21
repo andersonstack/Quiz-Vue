@@ -1,21 +1,24 @@
 <template>
   <div>
-    <h1 v-html="this.question"></h1>
+    <template v-if="this.question">
 
-    <template v-for="(answer, index) in this.answers" :key="index">
-      <input 
-        type="radio" 
-        name="options" 
-        value="answer">
-      <label v-html="answer"></label> <br>
+      <h1 v-html="this.question"></h1>
+
+        <template v-for="(answer, index) in this.answers" :key="index">
+          <input 
+            type="radio" 
+            name="options" 
+            value="answer">
+          <label v-html="answer"></label> <br>
+        </template> 
+
+      <button class ="send" type="button">Send</button>
+
     </template>
-
-    <button class ="send" type="button">Send</button>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'App',
 
@@ -26,28 +29,47 @@ export default {
       correctAnswer: undefined,
     }
   },
-  computed: { // adicionado respostas em array para o shuffle
+  computed: {
     answers() {
       var answers = [...this.incorrectAnswers];
-      answers.splice(Math.round(Math.random() * answers.length), 0, this.correctAnswer);
+      answers.splice(Math.floor(Math.random() * (answers.length + 1)), 0, this.correctAnswer);
       return answers;
     }
   },
 
-  created () {
-    this.axios
-    .get('https://opentdb.com/api.php?amount=1&category=18')
-    .then((response) => {
-      this.question = response.data.results[0].question;
-      this.incorrectAnswers = response.data.results[0].incorrect_answers;
-      this.correctAnswer = response.data.results[0].correct_answer;
-    })
+  methods: {
+    async fetchQuestion() {
+      const maxRetries = 5;
+      let attempts = 0;
+
+      while (attempts < maxRetries) {
+        try {
+          const response = await this.axios.get('https://opentdb.com/api.php?amount=1&category=18');
+          this.question = response.data.results[0].question;
+          this.incorrectAnswers = response.data.results[0].incorrect_answers;
+          this.correctAnswer = response.data.results[0].correct_answer;
+
+          if (this.question && this.incorrectAnswers && this.correctAnswer) {
+            break;
+          }
+        } catch (error) {
+          console.error('Erro ao buscar a pergunta:', error);
+        }
+        attempts++;
+      }
+
+      if (attempts === maxRetries) {
+        console.error('Número máximo de tentativas atingido.');
+      }
+    }
+  },
+
+  created() {
+    this.fetchQuestion();
   }
 }
-
-// https://opentdb.com/api.php?amount=1&category=18
-
 </script>
+
 
 <style lang="scss">
 #app {

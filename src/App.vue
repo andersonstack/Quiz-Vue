@@ -1,6 +1,16 @@
 <template>
   <div>
+    <h1>
+      Microphones can be used not only to pick...
+    </h1>
 
+    <input type="radio" name="options" value="True">
+    <label>True</label> <br>
+
+    <input type="radio" name="options" value="False">
+    <label>False</label> <br>
+
+    <button class ="send" type="button">Send</button>
   </div>
 </template>
 
@@ -18,6 +28,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 60px auto;
+  max-width: 960px;
 }
 </style>

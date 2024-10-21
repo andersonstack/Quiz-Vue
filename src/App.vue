@@ -19,6 +19,9 @@
 export default {
   name: 'App',
 }
+
+// https://opentdb.com/api.php?amount=1&category=18
+
 </script>
 
 <style lang="scss">

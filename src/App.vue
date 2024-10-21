@@ -1,8 +1,6 @@
 <template>
   <div>
-    <h1>
-      Microphones can be used not only to pick...
-    </h1>
+    <h1 v-html="this.question"></h1>
 
     <input type="radio" name="options" value="True">
     <label>True</label> <br>
@@ -23,7 +21,14 @@ export default {
     return {
       question: undefined,
       incorrectAnswers: undefined,
-      correctAnswer: undefined
+      correctAnswer: undefined,
+    }
+  },
+  computed: { // adicionado respostas em array para o shuffle
+    answers() {
+      var answers = [...this.incorrectAnswers];
+      answers.splice(Math.round(Math.random() * answers.length), 0, this.correctAnswer);
+      return answers;
     }
   },
 

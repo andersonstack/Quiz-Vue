@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <ScoreBord />
+    <ScoreBord v-if="this.question"/>
 
     <template v-if="this.question">
 

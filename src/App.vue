@@ -13,7 +13,10 @@
           <label v-html="answer"></label> <br>
         </template> 
 
-      <button class ="send" type="button">Send</button>
+      <button 
+        class ="send" 
+        @click="submitAnswer()" 
+        type="button">Send</button>
 
     </template>
   </div>
@@ -65,7 +68,22 @@ export default {
         }
       }
     }
+  },
+
+  submitAnswer() {
+    if (!this.chosen_answer){
+      alert("Pick an answer");
+    } else {
+      if (this.chosen_answer === this.correctAnswer) {
+        alert("Correct!");
+      } else {
+        alert("Wrong!");
+      }
+      this.chosen_answer = undefined;
+      this.fetchQuestion();
+    }
   }
+
 },
 
   created() {

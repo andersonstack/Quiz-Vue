@@ -24,12 +24,14 @@
         class="result"
         v-if="this.answerSubmiteed"
       >
-        <h4 v-if="this.correctAnswer == this.chosenAnswer">
-          &#9989; Great! You got it right. The correct answer is "{{ correctAnswer }}"
+        <h4 
+          v-if="this.correctAnswer === this.chosenAnswer"
+          v-html="'✅ Great! You got it right. The correct answer is: ' + correctAnswer">
         </h4>
         
-        <h4 v-else-if="this.correctAnswer != this.chosenAnswer">
-          &#10060; I'm sorry. The correct answer is "{{ correctAnswer }}"
+        <h4 
+          v-else-if="this.correctAnswer !== this.chosenAnswer"
+          v-html="'❌ I am sorry. The correct answer is: ' + correctAnswer">
         </h4>
         
         <button 

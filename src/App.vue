@@ -6,10 +6,11 @@
 
         <template v-for="(answer, index) in this.answers" :key="index">
           <input 
+            :disabled="this.answerSubmiteed"
             type="radio" 
             name="options" 
             :value="answer"
-            v-model="this.chosen_answer">
+            v-model="this.chosenAnswer">
           <label v-html="answer"></label> <br>
         </template> 
 
@@ -32,7 +33,8 @@ export default {
       question: undefined,
       incorrectAnswers: undefined,
       correctAnswer: undefined,
-      chosen_answer: undefined,
+      chosenAnswer: undefined,
+      answerSubmiteed: false,
     }
   },
   computed: {
@@ -71,16 +73,16 @@ export default {
   },
 
   submitAnswer() {
-    if (!this.chosen_answer){
+    if (!this.chosenAnswer){
       alert("Pick an answer");
     } else {
-      if (this.chosen_answer === this.correctAnswer) {
-        alert("Correct!");
+      this.answerSubmiteed = true;
+      if (this.chosenAnswer === this.correctAnswer) {
+        console.log("Correct!");
       } else {
-        alert("Wrong!");
+        console.log("Wrong!");
       }
-      this.chosen_answer = undefined;
-      this.fetchQuestion();
+      this.chosenAnswer = undefined;
     }
   }
 

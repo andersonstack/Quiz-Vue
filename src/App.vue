@@ -8,7 +8,8 @@
           <input 
             type="radio" 
             name="options" 
-            value="answer">
+            :value="answer"
+            v-model="this.chosen_answer">
           <label v-html="answer"></label> <br>
         </template> 
 
@@ -28,6 +29,7 @@ export default {
       question: undefined,
       incorrectAnswers: undefined,
       correctAnswer: undefined,
+      chosen_answer: undefined,
     }
   },
   computed: {

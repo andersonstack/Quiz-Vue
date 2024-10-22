@@ -19,6 +19,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'App',
 
@@ -39,28 +40,28 @@ export default {
 
   methods: {
   async fetchQuestion() {
-    let results = []; // Inicializa results fora do loop
+    let results = [];
 
     while (results.length === 0) {
       try {
         const response = await this.axios.get('https://opentdb.com/api.php?amount=1&category=18');
-        results = response.data.results; // Atribui diretamente a results
+        results = response.data.results;
 
-        // Verifica se os resultados não estão vazios
         if (Array.isArray(results) && results.length > 0) {
           this.question = results[0].question;
           this.incorrectAnswers = results[0].incorrect_answers;
           this.correctAnswer = results[0].correct_answer;
-          console.log('Pergunta obtida com sucesso'); // Log após obter a pergunta
-          break; // Sai do loop se a pergunta foi obtida
+          console.log('Pergunta obtida com sucesso');
+          break;
         }
       } catch (error) {
-        console.error('Erro ao buscar a pergunta:', error);
+        if(!error.response && error.code === 'ERR_NETWORK') {
+          alert('Erro de rede');
+          break;
+        } else {
+          console.error("Erro ao buscar a pergunta: ", error);
+        }
       }
-    }
-    
-    if (results.length === 0) {
-      console.error('Nenhuma pergunta válida encontrada após várias tentativas.');
     }
   }
 },

@@ -35,7 +35,8 @@
         <button 
           v-if="this.answerSubmiteed"
           class="send" 
-          type="button" 
+          type="button"
+          @click="fetchQuestion()" 
           >Next question</button>
       </section>
 
@@ -75,6 +76,8 @@ export default {
         results = response.data.results;
 
         if (Array.isArray(results) && results.length > 0) {
+          this.answerSubmiteed = false;
+          this.chosenAnswer = undefined;
           this.question = results[0].question;
           this.incorrectAnswers = results[0].incorrect_answers;
           this.correctAnswer = results[0].correct_answer;

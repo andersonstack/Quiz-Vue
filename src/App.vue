@@ -5,7 +5,7 @@
       <h1 v-html="this.question"></h1>
 
         <template v-for="(answer, index) in this.answers" :key="index">
-          <input 
+          <input
             :disabled="this.answerSubmiteed"
             type="radio" 
             name="options" 
@@ -15,19 +15,20 @@
         </template> 
 
       <button 
+        v-if="!this.answerSubmiteed" 
         class ="send" 
         @click="submitAnswer()" 
-        type="button">Send</button
-        >
+        type="button">Send</button>
 
       <section
         class="result"
+        v-if="this.answerSubmiteed"
       >
-        <h4 v-if="this.answerSubmiteed && this.correctAnswer == this.chosenAnswer">
+        <h4 v-if="this.correctAnswer == this.chosenAnswer">
           &#9989; Great! You got it right. The correct answer is "{{ correctAnswer }}"
         </h4>
         
-        <h4 v-else-if="this.answerSubmiteed && this.correctAnswer != this.chosenAnswer">
+        <h4 v-else-if="this.correctAnswer != this.chosenAnswer">
           &#10060; I'm sorry. The correct answer is "{{ correctAnswer }}"
         </h4>
         

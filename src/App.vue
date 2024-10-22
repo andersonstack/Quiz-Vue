@@ -17,7 +17,26 @@
       <button 
         class ="send" 
         @click="submitAnswer()" 
-        type="button">Send</button>
+        type="button">Send</button
+        >
+
+      <section
+        class="result"
+      >
+        <h4 v-if="this.answerSubmiteed && this.correctAnswer == this.chosenAnswer">
+          &#9989; Great! You got it right. The correct answer is "{{ correctAnswer }}"
+        </h4>
+        
+        <h4 v-else-if="this.answerSubmiteed && this.correctAnswer != this.chosenAnswer">
+          &#10060; I'm sorry. The correct answer is "{{ correctAnswer }}"
+        </h4>
+        
+        <button 
+          v-if="this.answerSubmiteed"
+          class="send" 
+          type="button" 
+          >Next question</button>
+      </section>
 
     </template>
   </div>
@@ -82,7 +101,6 @@ export default {
       } else {
         console.log("Wrong!");
       }
-      this.chosenAnswer = undefined;
     }
   }
 

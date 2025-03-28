@@ -32,29 +32,12 @@
 
         <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
 
-        <section class="result" v-if="this.answerSubmiteed">
-          <h4
-            v-if="this.correctAnswer === this.chosenAnswer"
-            v-html="
-              '✅ Great! You got it right. The correct answer is: ' +
-              correctAnswer
-            "
-          ></h4>
-
-          <h4
-            v-else-if="this.correctAnswer !== this.chosenAnswer"
-            v-html="'❌ I am sorry. The correct answer is: ' + correctAnswer"
-          ></h4>
-
-          <button
-            v-if="this.answerSubmiteed"
-            class="send"
-            type="button"
-            @click="fetchQuestion()"
-          >
-            Next question
-          </button>
-        </section>
+        <ResultMessage
+          v-if="answerSubmiteed"
+          :correct="correctAnswer === chosenAnswer"
+          :correctAnswer="correctAnswer"
+          @next="fetchQuestion"
+        />
       </template>
     </div>
   </div>
@@ -62,11 +45,13 @@
 
 <script>
 import ScoreBord from "./components/ScoreBord.vue";
+import ResultMessage from "./components/ResultMessage.vue";
 
 export default {
   name: "App",
   components: {
     ScoreBord,
+    ResultMessage,
   },
 
   data() {

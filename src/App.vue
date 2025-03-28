@@ -1,61 +1,62 @@
 <template>
-  <div>
-    <ScoreBord
-      v-if="this.question"
-      :winCount="this.winCount"
-      :loseCount="this.loseCount"
-    />
+  <div class="container">
+    <div>
+      <ScoreBord
+        v-if="this.question"
+        :winCount="this.winCount"
+        :loseCount="this.loseCount"
+      />
 
-    <template v-if="this.question">
-      <h1 v-html="this.question"></h1>
+      <template v-if="this.question">
+        <h1 v-html="this.question"></h1>
 
-      <template v-for="(answer, index) in this.answers" :key="index">
-        <input
-          :disabled="this.answerSubmiteed"
-          type="radio"
-          name="options"
-          :value="answer"
-          v-model="this.chosenAnswer"
-        />
-        <label v-html="answer"></label> <br />
-      </template>
-
-      <button
-        v-if="!this.answerSubmiteed"
-        class="send"
-        @click="submitAnswer()"
-        type="button"
-      >
-        Send
-      </button>
-      <transition name="shake">
-        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-      </transition>
-
-      <section class="result" v-if="this.answerSubmiteed">
-        <h4
-          v-if="this.correctAnswer === this.chosenAnswer"
-          v-html="
-            '✅ Great! You got it right. The correct answer is: ' +
-            correctAnswer
-          "
-        ></h4>
-
-        <h4
-          v-else-if="this.correctAnswer !== this.chosenAnswer"
-          v-html="'❌ I am sorry. The correct answer is: ' + correctAnswer"
-        ></h4>
+        <template v-for="(answer, index) in this.answers" :key="index">
+          <input
+            :disabled="this.answerSubmiteed"
+            type="radio"
+            name="options"
+            :value="answer"
+            v-model="this.chosenAnswer"
+          />
+          <label v-html="answer"></label> <br />
+        </template>
 
         <button
-          v-if="this.answerSubmiteed"
+          v-if="!this.answerSubmiteed"
           class="send"
+          @click="submitAnswer()"
           type="button"
-          @click="fetchQuestion()"
         >
-          Next question
+          Send
         </button>
-      </section>
-    </template>
+
+        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+
+        <section class="result" v-if="this.answerSubmiteed">
+          <h4
+            v-if="this.correctAnswer === this.chosenAnswer"
+            v-html="
+              '✅ Great! You got it right. The correct answer is: ' +
+              correctAnswer
+            "
+          ></h4>
+
+          <h4
+            v-else-if="this.correctAnswer !== this.chosenAnswer"
+            v-html="'❌ I am sorry. The correct answer is: ' + correctAnswer"
+          ></h4>
+
+          <button
+            v-if="this.answerSubmiteed"
+            class="send"
+            type="button"
+            @click="fetchQuestion()"
+          >
+            Next question
+          </button>
+        </section>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -125,7 +126,7 @@ export default {
 
     submitAnswer() {
       if (!this.chosenAnswer) {
-        this.errorMessage = "É preciso escolher uma opção!";
+        this.errorMessage = "You have to choose an option!";
       } else {
         this.errorMessage = "";
         this.answerSubmiteed = true;

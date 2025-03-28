@@ -10,16 +10,12 @@
       <template v-if="this.question">
         <h1 v-html="this.question"></h1>
 
-        <template v-for="(answer, index) in this.answers" :key="index">
-          <input
-            :disabled="this.answerSubmiteed"
-            type="radio"
-            name="options"
-            :value="answer"
-            v-model="this.chosenAnswer"
-          />
-          <label v-html="answer"></label> <br />
-        </template>
+        <AnswersUser
+          :answers="answers"
+          v-model:chosenAnswer="chosenAnswer"
+          :disabled="answerSubmiteed"
+          v-if="question"
+        />
 
         <button
           v-if="!this.answerSubmiteed"
@@ -45,12 +41,14 @@
 
 <script>
 import ScoreBord from "./components/ScoreBord.vue";
+import AnswersUser from "./components/AnswersUser.vue";
 import ResultMessage from "./components/ResultMessage.vue";
 
 export default {
   name: "App",
   components: {
     ScoreBord,
+    AnswersUser,
     ResultMessage,
   },
 

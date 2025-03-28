@@ -28,6 +28,7 @@
       >
         Send
       </button>
+      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
 
       <section class="result" v-if="this.answerSubmiteed">
         <h4
@@ -74,6 +75,7 @@ export default {
       answerSubmiteed: false,
       winCount: 0,
       loseCount: 0,
+      errorMessage: "",
     };
   },
   computed: {
@@ -121,8 +123,9 @@ export default {
 
     submitAnswer() {
       if (!this.chosenAnswer) {
-        alert("Pick an answer");
+        this.errorMessage = "É preciso escolher uma opção!";
       } else {
+        this.errorMessage = "";
         this.answerSubmiteed = true;
         if (this.chosenAnswer === this.correctAnswer) {
           this.winCount++;
@@ -139,4 +142,6 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="css">
+@import "./styles/style.css";
+</style>

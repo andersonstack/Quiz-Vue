@@ -28,7 +28,9 @@
       >
         Send
       </button>
-      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+      <transition name="shake">
+        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+      </transition>
 
       <section class="result" v-if="this.answerSubmiteed">
         <h4

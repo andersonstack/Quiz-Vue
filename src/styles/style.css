@@ -84,3 +84,7 @@ label {
   text-align: center;
   animation: shake 0.5s;
 }
+
+.shake-enter-active {
+  animation: shake 0.4s;
+}
